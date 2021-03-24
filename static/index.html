@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="css/style.min.css" />
+    <link rel="stylesheet" href="css/style.min.css" />
+  </head>
+
+  <body>
+    <nav class="nav">
+      <img src="images/logo.png" alt="Maxi-Pollo" />
+      <div class="nav__options">
+        <a id="pollos" class="active" href="#pollos">Pollos</a>
+        <a id="comidas" href="#comidas">Comidas</a>
+        <a id="extras" href="#extras">Extras</a>
+      </div>
+    </nav>
+
+    <div class="food">
+      <div style="display: flex" id="showroom"></div>
+    </div>
+
+    <!-- <p>**Costo de envío se añade al finalizar tu compra ($30)</p>cc -->
+
+    <div id="snackbar"></div>
+
+    <div class="scrim"></div>
+    <div class="summary" id="summary">
+      <div class="summary__title">
+        <h2>Resumen del pedido</h2>
+        <a href="more" id="btn-dropdown">▲</a>
+      </div>
+      <div class="summary__dropdown" id="dropdown"></div>
+    </div>
+
+    <div class="modal" id="modal">
+      <div class="modal__content">
+        <div class="modal__info"></div>
+        <div class="modal__actions">
+          <div class="modal__price">
+            <select name="quantity" id="modalSelect">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            <p id="modal-price"></p>
+          </div>
+          <a href="#" class="delete">Borrar del carrito</a>
+        </div>
+
+        <div class="modal__final">
+          <p id="modal-total"></p>
+          <div class="ok">Ok</div>
+        </div>
+        <div class="modal__exit">&times</div>
+      </div>
+    </div>
+
+    <div class="modal modal-sauce" id="modal-sauces">
+      <div class="modal__content modal-sauce__content">
+        <h3>Elige tu salsa</h3>
+        <div class="sauces"></div>
+        <a href="#" id="modal-sauces-btn">Ok</a>
+      </div>
+    </div>
+
+    <div class="back d-none"></div>
+    <div class="address d-none"></div>
+
+    <!-- Sale summary & confirmation -->
+    <div class="confirm d-none">
+      <h5 class="confirm__heading">Confirmar pedido:</h5>
+      <div class="confirm__contents">
+        <div class="confirm__titles">
+          <div class="blank"></div>
+          <div class="qty">Cantidad</div>
+          <div class="price">Precio</div>
+        </div>
+      </div>
+      <hr class="confirm__separator" />
+      <div class="confirm__summary"></div>
+      <button type="submit" class="confirm__submit btn btn-success">
+        Confirmar
+      </button>
+    </div>
+    <!-- END -->
+
+    <div class="finish d-none">
+      <h5 class="finish__heading">¡Gracias por tu compra!</h5>
+      <p class="finish__notice">
+        Tu orden ha sido recibida y está siendo preparada.
+      </p>
+      <p class="finish__notice">
+        Dentro de 30 a 45 minutos la recibirás en tu domicilio.
+      </p>
+      <a href="/" class="finish__goback">Volver al inicio</a>
+    </div>
+
+    <div class="order-resume">
+      <div class="order-resume__price">
+        <p id="total"><span>Total: </span>$0</p>
+      </div>
+      <a href="#" class="btn btn-success next"> Terminar pedido </a>
+    </div>
+
+    <script src="js/index.js"></script>
+  </body>
+</html>

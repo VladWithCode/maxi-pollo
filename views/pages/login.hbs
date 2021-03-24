@@ -1,0 +1,43 @@
+{{#> layouts/default}}
+
+{{#*inline "scripts-block"}}
+
+{{/inline}}
+
+{{#*inline "header-block"}}
+
+{{/inline}}
+
+{{#*inline "content-block"}}
+<div class="container py-4">
+  <div class="row mb-5">
+    <div class="col">
+      <h1 class="display-2">Iniciar Sesión</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 m-auto">
+      <div class="card">
+        <div class="card-header">Ingrese sus datos</div>
+        <div class="card-body">
+          <form action="/admin/login" method="post" id="loginForm" class="container-fluid">
+            <div class="row mb-3">
+              <label for="user" class="form-label">Nombre de usuario</label>
+              <input type="text" class="form-control" id="user" name="user">
+            </div>
+            <div class="row mb-3">
+              <label for="pass" class="form-label">Contraseña</label>
+              <input type="password" name="pass" id="pass" class="form-control">
+            </div>
+            <div class="row">
+              <button class="btn btn-primary w-auto" type="submit" style="margin-left: auto;">Iniciar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/inline}}
+
+{{/layouts/default}}
