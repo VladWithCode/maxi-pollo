@@ -752,7 +752,7 @@ async function handleOrderSubmit(e) {
 
   try {
     res = await (
-      await fetch('http://127.0.0.1:3000/api/sale', {
+      await fetch('/api/sale', {
         method: 'POST',
         body: JSON.stringify(order),
         headers: {
@@ -796,7 +796,7 @@ function handleSaleConfirmation(sale) {
     e.preventDefault();
 
     const res = await (
-      await fetch('http://127.0.0.1:3000/api/sale/confirm', {
+      await fetch('/api/sale/confirm', {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -896,7 +896,7 @@ async function fetchProducts(category = null) {
   try {
     const svRes = await (
       await fetch(
-        `http://127.0.0.1:3000/api/meals${
+        `/api/meals${
           category && category.length > 0 ? `&category=${category}` : ''
         }`
       )
@@ -923,7 +923,7 @@ async function fetchSauces() {
 
   try {
     const svRes = await (
-      await fetch('http://127.0.0.1:3000/api/sauces')
+      await fetch('/api/sauces')
     ).json();
 
     if (svRes.status !== 'OK') {
