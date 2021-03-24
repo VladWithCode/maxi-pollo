@@ -752,7 +752,7 @@ async function handleOrderSubmit(e) {
 
   try {
     res = await (
-      await fetch('/api/sale', {
+      await fetch('https://maxi-pollo.com/api/sale', {
         method: 'POST',
         body: JSON.stringify(order),
         headers: {
@@ -796,7 +796,7 @@ function handleSaleConfirmation(sale) {
     e.preventDefault();
 
     const res = await (
-      await fetch('/api/sale/confirm', {
+      await fetch('https://maxi-pollo.com/api/sale/confirm', {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -896,7 +896,7 @@ async function fetchProducts(category = null) {
   try {
     const svRes = await (
       await fetch(
-        `/api/meals${
+        `https://maxi-pollo.com/api/meals${
           category && category.length > 0 ? `&category=${category}` : ''
         }`
       )
@@ -923,7 +923,7 @@ async function fetchSauces() {
 
   try {
     const svRes = await (
-      await fetch('/api/sauces')
+      await fetch('https://maxi-pollo.com/api/sauces')
     ).json();
 
     if (svRes.status !== 'OK') {
