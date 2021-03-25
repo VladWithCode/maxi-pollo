@@ -29,7 +29,6 @@ var public_api_1 = __importDefault(require("./routes/public-api"));
 var private_api_1 = __importDefault(require("./routes/private-api"));
 var admin_1 = __importDefault(require("./routes/admin"));
 var stripewh_1 = __importDefault(require("./functions/stripewh"));
-var helpers_1 = require("./functions/helpers");
 app.set('public', path_1.default.join(process.cwd(), 'public'));
 app.set('port', process.env.PORT || 3000);
 app.set('views', path_1.default.join(process.cwd(), 'views'));
@@ -67,7 +66,7 @@ app.use(function (req, res, next) {
     return next();
 });
 app.use('/api', public_api_1.default);
-app.use('/api', helpers_1.isAuthenticated, private_api_1.default);
+app.use('/api', private_api_1.default);
 app.use('/admin', admin_1.default);
 app.use(express_1.default.static(app.get('public')));
 app.listen(app.get('port'), function () {
