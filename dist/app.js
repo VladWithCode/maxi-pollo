@@ -29,9 +29,9 @@ var public_api_1 = __importDefault(require("./routes/public-api"));
 var private_api_1 = __importDefault(require("./routes/private-api"));
 var admin_1 = __importDefault(require("./routes/admin"));
 var stripewh_1 = __importDefault(require("./functions/stripewh"));
-app.set('public', path_1.default.join(process.cwd(), 'public'));
+app.set('public', path_1.default.join(__dirname, '..', 'public'));
 app.set('port', process.env.PORT || 3000);
-app.set('views', path_1.default.join(process.cwd(), 'views'));
+app.set('views', path_1.default.join(__dirname, '..', 'views'));
 app.engine('.hbs', express_handlebars_1.default({
     extname: '.hbs',
     partialsDir: path_1.default.join(app.get('views'), 'partials'),
