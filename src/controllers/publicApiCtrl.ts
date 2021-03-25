@@ -23,7 +23,7 @@ class PublicAPIController {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<void> {
+  ): Promise<void | Response> {
     const category: string = req.query.category as string;
 
     let foundMeals: Meal[];
@@ -37,14 +37,20 @@ class PublicAPIController {
     }
 
     if (foundMeals && !foundMeals.length) {
-      res.json({
+      if (category !== undefined || category !== null) {
+        return res.json({
+          status: 'NO_CONTENT',
+          message: `No se han encontrado productos disponibles con categoria: ${category}`,
+        });
+      }
+
+      return res.json({
         status: 'NO_CONTENT',
-        message: `No se han encontrado productos disponibles con categoria: ${category}`,
+        message: `No se han encontrado productos disponibles.`,
       });
-      return;
     }
 
-    res.json({
+    return res.json({
       status: 'OK',
       message: `Se han encontrado ${
         foundMeals!.length
@@ -57,21 +63,20 @@ class PublicAPIController {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<void> {
+  ): Promise<void | Response> {
     const foundSauces = await Sauce.find(
       { available: true },
       { name: true, available: true }
     );
 
     if (foundSauces && !foundSauces.length) {
-      res.json({
+      return res.json({
         status: 'NOT_FOUND',
         message: `No se han encontrado salsas disponibles`,
       });
-      return;
     }
 
-    res.json({
+    return res.json({
       status: 'OK',
       message: `Se han encontrado ${foundSauces.length} salsas disponibles.`,
       sauces: foundSauces.map((sauce) => sauce.toJSON()),
@@ -182,7 +187,7 @@ class PublicAPIController {
         clientSecret: CLIENT_SECRET,
         refreshToken: REFRESH_TOKEN,
         accessToken: accessToken,
-      }
+      },
     });
 
     const mailOptions = {
@@ -190,8 +195,8 @@ class PublicAPIController {
       to: process.env.CONTACT_MAIL || 'vladwithb@gmail.com',
       subject: 'Se ha recibido un nuevo pedido',
       text: createSaleMailText(sale),
-      html: createSaleMailHTML(sale)
-    }
+      html: createSaleMailHTML(sale),
+    };
 
     try {
       await transporter.sendMail(mailOptions);
@@ -199,8 +204,9 @@ class PublicAPIController {
       console.log(err);
       return res.json({
         status: 'MAIL_ERROR',
-        message: 'Se ha completado la venta, pero no ha sido posible enviar el correo electronico.',
-        err
+        message:
+          'Se ha completado la venta, pero no ha sido posible enviar el correo electronico.',
+        err,
       });
     }
 

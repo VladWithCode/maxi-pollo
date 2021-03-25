@@ -68,91 +68,9 @@ const summaryItems = [];
 
 const saucesArr = [];
 const sauceOptions = [];
-let sauces = [
-  /* {
-    _id: 1,
-    name: 'chipotle',
-    available: true,
-  },
-  {
-    _id: 2,
-    name: 'picosita',
-    available: false,
-  },
-  {
-    _id: 3,
-    name: 'bbq',
-    available: true,
-  },
-  {
-    _id: 4,
-    name: 'Mango Habanero',
-    available: true,
-  },
-  {
-    _id: 5,
-    name: 'agridulce',
-    available: true,
-  }, */
-];
-
 // fetch
-let products = [
-  /* {
-    _id: 1,
-    name: '1 Pollo',
-    description: 'Rostizado y bañado',
-    category: 'pollo',
-    image: 'chicken.png',
-    price: 105,
-    available: true,
-  },
-  {
-    _id: 2,
-    name: '2 Pollos',
-    description: 'Rostizados y bañados',
-    category: 'pollo',
-    image: 'chicken.png',
-    price: 200,
-    available: true,
-  },
-  {
-    _id: 3,
-    name: 'Arroz',
-    description: '1/2L de arroz blanco con elote',
-    category: 'extras',
-    image: 'burger.png',
-    price: 15,
-    available: true,
-  },
-  {
-    _id: 4,
-    name: 'Pollo a la Mexicana',
-    description: '250gr de delicioso pollo a la mexicana',
-    category: 'comidas',
-    image: 'burger.png',
-    price: 30,
-    available: true,
-  },
-  {
-    _id: 5,
-    name: 'Salpicón',
-    description: '1/2L de salpicón',
-    category: 'comidas',
-    image: 'burrito.png',
-    price: 30,
-    available: true,
-  },
-  {
-    _id: 6,
-    name: 'Papas',
-    description: 'Ricas papas asadas',
-    category: 'extras',
-    image: 'chicken.png',
-    price: 25,
-    available: true,
-  }, */
-];
+let sauces = [];
+let products = [];
 
 // VARIBLES />
 
@@ -193,25 +111,9 @@ function createAddSummary(item) {
     itemSauce.value = item.sauceID;
     itemElement.setAttributeNode(itemSauce);
   }
-
-  //   if (item.category == "pollo") {
-  //     sauces.forEach((e) => {
-  //       if (e._id == item.sauceID) {
-  // //         console.log("essss");
-  //         let sauceName = e.name;
-  //         itemElement.innerHTML = `
-  //   <span>${item.name} || ${sauceName}</span><u>${item.quantity}</u>$${
-  //           item.price * item.quantity
-  //         }
-  // `;
-  //       }
-  //     });
-  //   } else {
   itemElement.innerHTML = `
   <span>${item.name}</span><u>${item.quantity}</u>$${item.price * item.quantity}
-`;
-  // }
-
+  `;
   summaryItems.push(itemElement);
 }
 
@@ -346,14 +248,6 @@ function fillArrays() {
       }
     }
   });
-
-  // sauces.forEach((e) => {
-  //   if (e.available) {
-  //     createAddSauce(e);
-  //     pollo.sauceID = e._id;
-  //     products.push(pollo);
-  //   }
-  // });
 
   loadSauces();
   loadShowroom(pollos);
@@ -613,16 +507,6 @@ function closeModalSauce(sauceID, polloID) {
     updateTotal();
     createSnackbar(itemSchema.name);
   }
-
-  // if (document.querySelector('input[name="sauce"]:checked')) {
-  // //   console.log('pollito seleccionado jeje');
-  //   modalSauces.style.display = "none";
-  // }
-
-  // if (document.querySelector('input[name="sauce"]:checked')) {
-  //   pollo.sauceID = document.querySelector('input[name="sauce"]:checked').value;
-  //   modalSauces.style.display = "none";
-  // }
 }
 
 function checkTotal() {
@@ -897,7 +781,7 @@ async function fetchProducts(category = null) {
     const svRes = await (
       await fetch(
         `https://maxi-pollo.com/api/meals${
-          category && category.length > 0 ? `&category=${category}` : ''
+          category && category.length > 0 ? `?category=${category}` : ''
         }`
       )
     ).json();
