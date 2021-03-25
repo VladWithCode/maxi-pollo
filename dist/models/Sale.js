@@ -15,24 +15,30 @@ var SaleSchema = new mongoose_1.Schema({
         refs: String,
     },
     content: {
-        sauce: String,
         items: [
             {
                 title: String,
                 qty: Number,
                 price: Number,
                 total: Number,
+                sauce: String,
             },
         ],
     },
-    paymentMethod: String,
+    state: {
+        type: String,
+        default: 'initialized',
+        enum: ['initialized', 'confirmed', 'payed', 'delivered'],
+    },
+    paymentMethod: { type: String, default: 'Efectivo' },
     createdAt: { type: Number, default: Date.now() },
-    payed: Boolean,
+    confirmedAt: { type: Number },
+    payed: { type: Boolean, default: false },
     payedAt: Number,
-    delivered: Boolean,
-    subtotal: { type: Number, default: 0 },
-    deliveryFee: { type: Number, default: 0 },
-    tax: { type: Number, default: 0 },
-    total: { type: Number, default: 0 },
+    delivered: { type: Boolean, default: false },
+    subtotal: { type: Number },
+    deliveryFee: { type: Number },
+    tax: { type: Number },
+    total: { type: Number },
 });
 exports.default = mongoose_1.model('Sale', SaleSchema);

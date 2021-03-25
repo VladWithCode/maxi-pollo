@@ -72,10 +72,10 @@ var PrivateAPIController = (function () {
                             sauces.forEach(function (sauce) {
                                 if (!result.sauceState)
                                     return (result.sauceState = [
-                                        { name: sauce.title, state: sauce.available },
+                                        { name: sauce.name, state: sauce.available },
                                     ]);
                                 return result.sauceState.push({
-                                    name: sauce.title,
+                                    name: sauce.name,
                                     state: sauce.available,
                                 });
                             });
@@ -83,11 +83,11 @@ var PrivateAPIController = (function () {
                             meals.forEach(function (meal) {
                                 if (!result.mealState)
                                     return (result.mealState = [
-                                        { name: meal.title, state: meal.available },
+                                        { name: meal.name, state: meal.available },
                                     ]);
                                 return result.mealState.push({
-                                    name: meal.title,
-                                    state: meal.available
+                                    name: meal.name,
+                                    state: meal.available,
                                 });
                             });
                         return [2, res.status(200).json({
@@ -152,7 +152,7 @@ var PrivateAPIController = (function () {
                             return [2];
                         }
                         foundMeal === null || foundMeal === void 0 ? void 0 : foundMeal.set({
-                            title: title || foundMeal.title,
+                            title: title || foundMeal.name,
                             price: price || foundMeal.price,
                             category: category || foundMeal.category,
                             description: description || foundMeal.description,
@@ -207,13 +207,11 @@ var PrivateAPIController = (function () {
                     case 4:
                         err_4 = _a.sent();
                         return [2, next(err_4)];
-                    case 5:
-                        res.json({
+                    case 5: return [2, res.json({
                             status: 'UPDATED',
                             availability: foundMeal === null || foundMeal === void 0 ? void 0 : foundMeal.available,
                             id: id,
-                        });
-                        return [2];
+                        })];
                 }
             });
         });
@@ -267,7 +265,7 @@ var PrivateAPIController = (function () {
                             });
                             return [2];
                         }
-                        foundSauce.title = title;
+                        foundSauce.name = title;
                         _a.label = 2;
                     case 2:
                         _a.trys.push([2, 4, , 5]);

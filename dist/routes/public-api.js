@@ -8,6 +8,8 @@ var publicApiCtrl_1 = __importDefault(require("../controllers/publicApiCtrl"));
 var router = express_1.Router();
 router.get('/meals', publicApiCtrl_1.default.fetchMeals);
 router.get('/sauces', publicApiCtrl_1.default.fetchSauces);
+router.post('/sale', publicApiCtrl_1.default.initSale);
+router.put('/sale/confirm', publicApiCtrl_1.default.confirmSale);
 router.use(function (err, req, res, next) {
     if (res.headersSent)
         return next();

@@ -12,11 +12,12 @@ var connect_mongodb_session_1 = __importDefault(require("connect-mongodb-session
 var cookie_parser_1 = __importDefault(require("cookie-parser"));
 var morgan_1 = __importDefault(require("morgan"));
 var passport_1 = __importDefault(require("passport"));
+var cors_1 = __importDefault(require("cors"));
 var app = express_1.default();
 var mdbStore = new (connect_mongodb_session_1.default(express_session_1.default))({
     collection: 'sessions',
     uri: process.env.DB_URI || 'mongodb://localhost/meals',
-    expires: 1000 * 60 * 60 * 24 * 7
+    expires: 1000 * 60 * 60 * 24 * 7,
 }, function (err) {
     if (!err)
         return;
@@ -36,11 +37,12 @@ app.engine('.hbs', express_handlebars_1.default({
     extname: '.hbs',
     partialsDir: path_1.default.join(app.get('views'), 'partials'),
     defaultLayout: undefined,
-    helpers: {}
+    helpers: {},
 }));
 app.set('view engine', '.hbs');
 app.locals.saleState = true;
 app.use('/stripe/wh', express_1.default.raw({ type: 'application/json' }), stripewh_1.default);
+app.use(cors_1.default());
 app.use(express_1.default.json({}));
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(cookie_parser_1.default(process.env.COOKIE_SECRET || 'keyboardcat'));
@@ -50,9 +52,9 @@ app.use(express_session_1.default({
     secret: process.env.SESSION_SECRET || 'supersecretsecret',
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7,
-        sameSite: true
+        sameSite: true,
     },
-    store: mdbStore
+    store: mdbStore,
 }));
 app.use(connect_flash_1.default());
 app.use(passport_1.default.initialize());
@@ -68,4 +70,6 @@ app.use('/api', public_api_1.default);
 app.use('/api', helpers_1.isAuthenticated, private_api_1.default);
 app.use('/admin', admin_1.default);
 app.use(express_1.default.static(app.get('public')));
-app.listen(app.get('port'), function () { return console.log("Server listening on port: " + app.get('port')); });
+app.listen(app.get('port'), function () {
+    return console.log("Server listening on port: " + app.get('port'));
+});
