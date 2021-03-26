@@ -89,7 +89,7 @@ function createAddCard(product, arr) {
     <span>${product.description}</span>
   </div>
   <div class="image">
-    <img src="images/${product.thumb}" alt="pollo">
+    <img src="images/${product.thumb || 'pollo_1.jpg'}" alt="pollo">
   </div>
   <div class="resume">
     <p><span>Precio:</span>$${product.price}</p>
