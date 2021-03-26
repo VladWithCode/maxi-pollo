@@ -714,7 +714,7 @@ function fillConfirmationContents(saleContents) {
 
 function createConfirmationItem(item) {
   return `<div class="confirm__item">
-  <div class="title" title="${item.title} (${item.sauce})"><span class="tit">${item.title}</span>${item.sauce ? `<span class="sp"></span><span class="sc">${item.sauce}</span></div>` : ''}
+  <div class="title" title="${item.title} (${item.sauce})"><span class="tit">${item.title}</span>${item.sauce !== undefined && item.sauce !== null ? `<span class="sp"></span><span class="sc">${item.sauce}</span>` : ''}</div>
   <div class="qty">${item.qty}</div>
   <div class="price">$ ${item.total}</div>
   </div>
