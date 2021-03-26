@@ -7,11 +7,11 @@ var express_1 = require("express");
 var privateApiCtrl_1 = __importDefault(require("../controllers/privateApiCtrl"));
 var router = express_1.Router();
 router.post('/meals', privateApiCtrl_1.default.createMeal);
-router.put('/meals', privateApiCtrl_1.default.updateMeal);
-router.patch('/meals', privateApiCtrl_1.default.updateMealAvailability);
+router.put('/meals/:id', privateApiCtrl_1.default.updateMeal);
+router.patch('/meals/:id', privateApiCtrl_1.default.updateMealAvailability);
 router.post('/sauces', privateApiCtrl_1.default.createSauce);
-router.put('/sauces', privateApiCtrl_1.default.updateSauce);
-router.patch('/sauces', privateApiCtrl_1.default.updateSauceAvailability);
+router.put('/sauces/:id', privateApiCtrl_1.default.updateSauce);
+router.patch('/sauces/:id', privateApiCtrl_1.default.updateSauceAvailability);
 router.route('/admin').post(privateApiCtrl_1.default.registerAdmin);
 router.route('/state').get(privateApiCtrl_1.default.fetchCurrentState);
 router.use(function (err, req, res, next) {
