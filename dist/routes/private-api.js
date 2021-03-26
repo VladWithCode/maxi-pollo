@@ -12,27 +12,23 @@ router.patch('/meals', privateApiCtrl_1.default.updateMealAvailability);
 router.post('/sauces', privateApiCtrl_1.default.createSauce);
 router.put('/sauces', privateApiCtrl_1.default.updateSauce);
 router.patch('/sauces', privateApiCtrl_1.default.updateSauceAvailability);
-router.route('/admin')
-    .post(privateApiCtrl_1.default.registerAdmin);
-router.route('/state')
-    .get(privateApiCtrl_1.default.fetchCurrentState);
+router.route('/admin').post(privateApiCtrl_1.default.registerAdmin);
+router.route('/state').get(privateApiCtrl_1.default.fetchCurrentState);
 router.use(function (err, req, res, next) {
     if (res.headersSent)
         return next();
     console.log('Private API ERROR\n', err);
     if (err.name === 'MongoError') {
-        res.status(500).json({
+        return res.status(500).json({
             status: 'DB_ERROR',
             message: 'Ocurrio un error con la base de datos',
-            err: err
+            err: err,
         });
-        return;
     }
-    res.status(500).json({
+    return res.status(500).json({
         status: 'SERVER_ERROR',
         message: 'Ocurrio un error interno en el servidor',
-        err: err
+        err: err,
     });
-    return;
 });
 exports.default = router;

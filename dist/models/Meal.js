@@ -6,7 +6,7 @@ var MealSchema = new mongoose_1.Schema({
     price: { type: Number, required: true },
     category: { type: String, required: true },
     description: { type: String, default: null },
-    thumb: { type: String, required: true },
+    thumb: { type: String },
     available: { type: Boolean, default: true }
 });
 exports.default = mongoose_1.model('Meal', MealSchema);
