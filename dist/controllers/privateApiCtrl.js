@@ -100,13 +100,13 @@ var PrivateAPIController = (function () {
     };
     PrivateAPIController.prototype.createMeal = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, title, price, category, description, thumb, newMeal, err_2;
+            var _a, name, price, category, description, thumb, newMeal, err_2;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = req.body, title = _a.title, price = _a.price, category = _a.category, description = _a.description, thumb = _a.thumb;
+                        _a = req.body, name = _a.name, price = _a.price, category = _a.category, description = _a.description, thumb = _a.thumb;
                         newMeal = new Meal_1.default({
-                            title: title,
+                            name: name,
                             price: price,
                             category: category,
                             description: description,
@@ -135,12 +135,12 @@ var PrivateAPIController = (function () {
     };
     PrivateAPIController.prototype.updateMeal = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, _a, title, price, category, description, thumb, foundMeal, err_3;
+            var id, _a, name, price, category, description, thumb, foundMeal, err_3;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         id = req.params.id;
-                        _a = req.body, title = _a.title, price = _a.price, category = _a.category, description = _a.description, thumb = _a.thumb;
+                        _a = req.body, name = _a.name, price = _a.price, category = _a.category, description = _a.description, thumb = _a.thumb;
                         return [4, Meal_1.default.findById(id)];
                     case 1:
                         foundMeal = _b.sent();
@@ -152,7 +152,7 @@ var PrivateAPIController = (function () {
                             return [2];
                         }
                         foundMeal === null || foundMeal === void 0 ? void 0 : foundMeal.set({
-                            title: title || foundMeal.name,
+                            name: name || foundMeal.name,
                             price: price || foundMeal.price,
                             category: category || foundMeal.category,
                             description: description || foundMeal.description,
@@ -161,20 +161,18 @@ var PrivateAPIController = (function () {
                         _b.label = 2;
                     case 2:
                         _b.trys.push([2, 4, , 5]);
-                        return [4, (foundMeal === null || foundMeal === void 0 ? void 0 : foundMeal.save())];
+                        return [4, foundMeal.save()];
                     case 3:
                         _b.sent();
                         return [3, 5];
                     case 4:
                         err_3 = _b.sent();
                         return [2, next(err_3)];
-                    case 5:
-                        res.json({
+                    case 5: return [2, res.json({
                             status: 'UPDATED',
                             newProduct: foundMeal.toJSON(),
                             id: id,
-                        });
-                        return [2];
+                        })];
                 }
             });
         });
@@ -190,13 +188,12 @@ var PrivateAPIController = (function () {
                     case 1:
                         foundMeal = _a.sent();
                         if (!foundMeal) {
-                            res.json({
-                                status: 'NOT_FOUND',
-                                message: "No se encontro producto con id: " + id,
-                            });
-                            return [2];
+                            return [2, res.json({
+                                    status: 'NOT_FOUND',
+                                    message: "No se encontro producto con id: " + id,
+                                })];
                         }
-                        foundMeal.available = !(foundMeal === null || foundMeal === void 0 ? void 0 : foundMeal.available);
+                        foundMeal.available = !foundMeal.available;
                         _a.label = 2;
                     case 2:
                         _a.trys.push([2, 4, , 5]);
@@ -218,13 +215,13 @@ var PrivateAPIController = (function () {
     };
     PrivateAPIController.prototype.createSauce = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var title, newSauce, err_5;
+            var name, newSauce, err_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        title = req.body.title;
+                        name = req.body.name;
                         newSauce = new Sauce_1.default({
-                            title: title,
+                            name: name,
                         });
                         _a.label = 1;
                     case 1:
@@ -236,53 +233,48 @@ var PrivateAPIController = (function () {
                     case 3:
                         err_5 = _a.sent();
                         return [2, next(err_5)];
-                    case 4:
-                        res.json({
+                    case 4: return [2, res.json({
                             status: 'CREATED',
                             message: 'Salsa creada exitosamente',
                             id: newSauce._id,
-                        });
-                        return [2];
+                        })];
                 }
             });
         });
     };
     PrivateAPIController.prototype.updateSauce = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, title, foundSauce, err_6;
+            var id, name, foundSauce, err_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         id = req.params.id;
-                        title = req.body.title;
+                        name = req.body.name;
                         return [4, Sauce_1.default.findById(id)];
                     case 1:
                         foundSauce = _a.sent();
                         if (!foundSauce) {
-                            res.json({
-                                status: 'NOT_FOUND',
-                                message: "No se encontro salsa con id: " + id,
-                            });
-                            return [2];
+                            return [2, res.json({
+                                    status: 'NOT_FOUND',
+                                    message: "No se encontro salsa con id: " + id,
+                                })];
                         }
-                        foundSauce.name = title;
+                        foundSauce.name = name;
                         _a.label = 2;
                     case 2:
                         _a.trys.push([2, 4, , 5]);
-                        return [4, (foundSauce === null || foundSauce === void 0 ? void 0 : foundSauce.save())];
+                        return [4, foundSauce.save()];
                     case 3:
                         _a.sent();
                         return [3, 5];
                     case 4:
                         err_6 = _a.sent();
                         return [2, next(err_6)];
-                    case 5:
-                        res.json({
+                    case 5: return [2, res.json({
                             status: 'UPDATED',
                             newSauce: foundSauce === null || foundSauce === void 0 ? void 0 : foundSauce.toJSON(),
                             id: id,
-                        });
-                        return [2];
+                        })];
                 }
             });
         });
@@ -315,13 +307,11 @@ var PrivateAPIController = (function () {
                     case 4:
                         err_7 = _a.sent();
                         return [2, next(err_7)];
-                    case 5:
-                        res.json({
+                    case 5: return [2, res.json({
                             status: 'UPDATED',
                             availability: foundSauce === null || foundSauce === void 0 ? void 0 : foundSauce.available,
                             id: id,
-                        });
-                        return [2];
+                        })];
                 }
             });
         });
