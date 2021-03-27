@@ -213,9 +213,45 @@ var PrivateAPIController = (function () {
             });
         });
     };
+    PrivateAPIController.prototype.deleteMeal = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, deletedMeal, err_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        id = req.params.id;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4, Meal_1.default.findByIdAndDelete(id).lean()];
+                    case 2:
+                        deletedMeal = _a.sent();
+                        return [3, 4];
+                    case 3:
+                        err_5 = _a.sent();
+                        console.log(err_5);
+                        return [2, res.json({
+                                status: 'DB_ERROR',
+                                message: "Ocurrio un error con la base de datos.",
+                            })];
+                    case 4:
+                        if (!deletedMeal)
+                            return [2, res.json({
+                                    status: 'NOT_FOUND',
+                                    message: "No se encontro producto con id: " + id,
+                                })];
+                        return [2, res.json({
+                                status: 'OK',
+                                message: "Producto con id \"" + id + "\" ha sido eliminado con exito",
+                                meal: deletedMeal,
+                            })];
+                }
+            });
+        });
+    };
     PrivateAPIController.prototype.createSauce = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var name, newSauce, err_5;
+            var name, newSauce, err_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -231,8 +267,8 @@ var PrivateAPIController = (function () {
                         _a.sent();
                         return [3, 4];
                     case 3:
-                        err_5 = _a.sent();
-                        return [2, next(err_5)];
+                        err_6 = _a.sent();
+                        return [2, next(err_6)];
                     case 4: return [2, res.json({
                             status: 'CREATED',
                             message: 'Salsa creada exitosamente',
@@ -244,7 +280,7 @@ var PrivateAPIController = (function () {
     };
     PrivateAPIController.prototype.updateSauce = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, name, foundSauce, err_6;
+            var id, name, foundSauce, err_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -268,8 +304,8 @@ var PrivateAPIController = (function () {
                         _a.sent();
                         return [3, 5];
                     case 4:
-                        err_6 = _a.sent();
-                        return [2, next(err_6)];
+                        err_7 = _a.sent();
+                        return [2, next(err_7)];
                     case 5: return [2, res.json({
                             status: 'UPDATED',
                             newSauce: foundSauce === null || foundSauce === void 0 ? void 0 : foundSauce.toJSON(),
@@ -281,7 +317,7 @@ var PrivateAPIController = (function () {
     };
     PrivateAPIController.prototype.updateSauceAvailability = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, foundSauce, err_7;
+            var id, foundSauce, err_8;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -305,8 +341,8 @@ var PrivateAPIController = (function () {
                         _a.sent();
                         return [3, 5];
                     case 4:
-                        err_7 = _a.sent();
-                        return [2, next(err_7)];
+                        err_8 = _a.sent();
+                        return [2, next(err_8)];
                     case 5: return [2, res.json({
                             status: 'UPDATED',
                             availability: foundSauce === null || foundSauce === void 0 ? void 0 : foundSauce.available,
@@ -316,9 +352,46 @@ var PrivateAPIController = (function () {
             });
         });
     };
+    PrivateAPIController.prototype.deleteSauce = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, deletedSauce, err_9;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        id = req.params.id;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4, Sauce_1.default.findByIdAndDelete(id).lean()];
+                    case 2:
+                        deletedSauce = _a.sent();
+                        return [3, 4];
+                    case 3:
+                        err_9 = _a.sent();
+                        console.log(err_9);
+                        return [2, res.json({
+                                status: 'DB_ERROR',
+                                message: "Ha ocurrido un error al intentar eliminar la salsa con id: \"" + id + "\"",
+                                err: err_9
+                            })];
+                    case 4:
+                        if (!deletedSauce)
+                            return [2, res.json({
+                                    status: 'NOT_FOUND',
+                                    message: "No se ha encontrado salsa con id \"" + id + "\"",
+                                })];
+                        return [2, res.json({
+                                status: 'OK',
+                                message: "La salsa con id \"" + id + "\" ha sido eliminada exitosamente",
+                                sauce: deletedSauce
+                            })];
+                }
+            });
+        });
+    };
     PrivateAPIController.prototype.registerAdmin = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, user, pass, confirmPass, newAdmin, err_8;
+            var _a, user, pass, confirmPass, newAdmin, err_10;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -348,8 +421,8 @@ var PrivateAPIController = (function () {
                         _b.sent();
                         return [3, 5];
                     case 4:
-                        err_8 = _b.sent();
-                        next(err_8);
+                        err_10 = _b.sent();
+                        next(err_10);
                         return [3, 5];
                     case 5: return [2, res.json({
                             status: 'CREATED',

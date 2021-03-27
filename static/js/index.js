@@ -86,11 +86,15 @@ function createAddCard(product, arr) {
   card.innerHTML = `
   <div class="description">
     <h2>${product.name}</h2>
-    <span>${product.description}</span>
+    <span>${product.description || ''}</span>
   </div>
-  <div class="image">
-    <img src="images/${product.thumb || 'pollo_1.jpg'}" alt="pollo">
-  </div>
+  ${
+    product.thumb !== undefined && product.thumb !== null
+      ? `<div class="image">
+    <img src="images/${product.thumb}" alt="pollo">
+    </div>`
+      : ''
+  }
   <div class="resume">
     <p><span>Precio:</span>$${product.price}</p>
     <a data-id="${product._id}" class="btn btn-primary add" href="#">Añadir</a>
@@ -636,7 +640,7 @@ async function handleOrderSubmit(e) {
 
   try {
     res = await (
-      await fetch('https://maxi-pollo.com/api/sale', {
+      await fetch('http://localhost:3000/api/sale', {
         method: 'POST',
         body: JSON.stringify(order),
         headers: {
@@ -680,7 +684,7 @@ function handleSaleConfirmation(sale) {
     e.preventDefault();
 
     const res = await (
-      await fetch('https://maxi-pollo.com/api/sale/confirm', {
+      await fetch('http://localhost:3000/api/sale/confirm', {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -714,7 +718,13 @@ function fillConfirmationContents(saleContents) {
 
 function createConfirmationItem(item) {
   return `<div class="confirm__item">
-  <div class="title" title="${item.title} (${item.sauce})"><span class="tit">${item.title}</span>${item.sauce !== undefined && item.sauce !== null ? `<span class="sp"></span><span class="sc">${item.sauce}</span>` : ''}</div>
+  <div class="title" title="${item.title} (${item.sauce})"><span class="tit">${
+    item.title
+  }</span>${
+    item.sauce !== undefined && item.sauce !== null
+      ? `<span class="sp"></span><span class="sc">${item.sauce}</span>`
+      : ''
+  }</div>
   <div class="qty">${item.qty}</div>
   <div class="price">$ ${item.total}</div>
   </div>
@@ -780,7 +790,7 @@ async function fetchProducts(category = null) {
   try {
     const svRes = await (
       await fetch(
-        `https://maxi-pollo.com/api/meals${
+        `http://localhost:3000/api/meals${
           category && category.length > 0 ? `?category=${category}` : ''
         }`
       )
@@ -807,7 +817,7 @@ async function fetchSauces() {
 
   try {
     const svRes = await (
-      await fetch('https://maxi-pollo.com/api/sauces')
+      await fetch('http://localhost:3000/api/sauces')
     ).json();
 
     if (svRes.status !== 'OK') {

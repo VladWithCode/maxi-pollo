@@ -90,7 +90,7 @@ var createSaleMailHTML = function (sale) {
     function contentsToHTML(saleContents) {
         var html = '<ul>';
         saleContents.forEach(function (item) {
-            html += "<li><strong>" + item.title + (item.sauce && " (" + item.sauce + ")") + "</strong> -- x <strong>" + item.qty + "</strong> -- $" + item.total + "</li>";
+            html += "<li><strong>" + item.title + (item.sauce ? "  (" + item.sauce + ")" : '') + "</strong> -- <strong>" + item.qty + "</strong> -- $" + item.total + "</li>";
         });
         html += '</ul>';
         return html;

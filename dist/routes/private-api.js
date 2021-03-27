@@ -9,6 +9,7 @@ var router = express_1.Router();
 router.post('/meals', privateApiCtrl_1.default.createMeal);
 router.put('/meals/:id', privateApiCtrl_1.default.updateMeal);
 router.patch('/meals/:id', privateApiCtrl_1.default.updateMealAvailability);
+router.delete('/meals/:id', privateApiCtrl_1.default.deleteMeal);
 router.post('/sauces', privateApiCtrl_1.default.createSauce);
 router.put('/sauces/:id', privateApiCtrl_1.default.updateSauce);
 router.patch('/sauces/:id', privateApiCtrl_1.default.updateSauceAvailability);
