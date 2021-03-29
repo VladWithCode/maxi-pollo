@@ -39,14 +39,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   /* Initial state check and rendering */
   await (async function () {
     const { state } = await fetchState();
-    // console.log(state);
+    console.log(state);
 
     if (state.saleState) {
       saleStateDisplay.textContent = 'Habilitadas';
+      saleStateDisplay.dataset['state'] = 'enabled';
       saleStateDisplay.classList.remove('state__value--u');
       saleStateDisplay.classList.add('state__value--a');
     } else {
       saleStateDisplay.textContent = 'Deshabilitadas';
+      saleStateDisplay.dataset['state'] = 'disabled';
       saleStateDisplay.classList.remove('state__value--a');
       saleStateDisplay.classList.add('state__value--u');
     }
@@ -67,8 +69,78 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /* Sale State Management */
   saleStateDisplay.addEventListener('click', async function (e) {
-    this.classList.add('loading');
+    this.classList.add('loading', 'noclick');
+    this.classList.remove('state__value--a', 'state__value--u');
+    let currentState = this.dataset.state;
+    let res;
 
-    setTimeout(() => this.classList.remove('loading'), 2000);
+    try {
+      res = await (
+        await fetch('/api/sales', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'PATCH',
+          body: JSON.stringify({ currentState }),
+        })
+      ).json();
+      this.classList.remove('loading', 'noclick');
+    } catch (err) {
+      return console.log(err);
+    }
+
+    if (res.status !== 'OK') {
+      handleFetchErrors(res);
+    }
+
+    if (res.newState) {
+      this.textContent = 'Habilitadas';
+      this.classList.add('state__value--a');
+      this.dataset.state = 'enabled';
+    } else {
+      this.textContent = 'Deshabilitadas';
+      this.classList.add('state__value--u');
+      this.dataset.state = 'disabled';
+    }
+  });
+
+  /* Meal & Sauce Availability Management */
+  const stateTogglers = document.querySelectorAll('.av-toggler');
+
+  stateTogglers.forEach((t) => {
+    t.addEventListener('click', async function (e) {
+      this.classList.add('loading', 'noclick');
+      this.classList.remove('state__value--a', 'state__value--u');
+      let { availability: isAvailable, id, type } = this.dataset;
+      let res;
+      const apiURI = `/api/${type === 'sauce' ? 'sauces' : 'meals'}/${id}`;
+
+      try {
+        res = await (
+          await fetch(apiURI, {
+            header: {
+              'Content-Type': 'application/json',
+            },
+            method: 'PATCH',
+            body: JSON.stringify({ isAvailable }),
+          })
+        ).json();
+        this.classList.remove('loading', 'noclick');
+      } catch (err) {
+        return console.log(err);
+      }
+
+      if (res.status !== 'OK') {
+        handleFetchErrors(res);
+      }
+
+      if (res.availability) {
+        this.classList.add('state__value--a');
+        this.dataset.availability = 'available';
+      } else {
+        this.classList.add('state__value--u');
+        this.dataset.availability = 'unavailable';
+      }
+    });
   });
 });

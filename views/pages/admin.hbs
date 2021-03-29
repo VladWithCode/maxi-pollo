@@ -1,7 +1,7 @@
 {{#> layouts/default}}
 
 {{#*inline "scripts-block"}}
-<script src="/js/dashboard.js" type="module"></script>
+<script src="/js/dashboard.js" type="module" defer></script>
 {{/inline}}
 
 {{#*inline "content-block"}}
@@ -17,34 +17,24 @@
       <div class="card">
         <div class="card-header d-flex">
           <h5 class="card-title m-auto ms-1 col-auto">Estado</h5>
-          <div class="col-auto m-auto me-1">
+          {{!-- <div class="col-auto m-auto me-1">
             <button class="btn btn-primary">Actualizar</button>
-          </div>
+          </div> --}}
         </div>
         <div class="card-body">
           <div class="state container-fluid">
             <div class="row state__row">
               <div class="col-6 state__title">Ventas:</div>
-              <div class="col-6 text-end state__value" data-state="enabled" id="saleStateDisplay">Habilitadas</div>
+              <div class="col-6 text-end state__value" id="saleStateDisplay">Habilitadas</div>
             </div>
             <div class="row state__row">
               <div class="col-6 state__title">Salsas:</div>
-              <div class="col-6 state__list" id="sauceList">
-                {{!-- <div class="state__value" data-availability="available">BBQ</div>
-                <div class="state__value" data-availability="available">Buffalo</div>
-                <div class="state__value" data-availability="unavailable">Mango Habanero</div>
-                <div class="state__value" data-availability="available">Picosita</div> --}}
-              </div>
+              <div class="col-6 state__list" id="sauceList"></div>
             </div>
             <div class="row state__row">
               <div class="col-6 state__title">Productos:</div>
-              <div class="col-6 state__list" id="mealList">
-                {{!-- <div class="state__value" data-availability="available">2 Pollos</div>
-                <div class="state__value" data-availability="available">1 Pollo y Medio</div>
-                <div class="state__value" data-availability="available">1 Pollo</div> --}}
-              </div>
+              <div class="col-6 state__list" id="mealList"></div>
             </div>
-
           </div>
         </div>
       </div>
