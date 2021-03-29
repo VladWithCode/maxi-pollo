@@ -837,6 +837,16 @@ async function fetchSauces() {
 }
 
 async function initApp() {
+  const res = await (await fetch('/api/sale/state')).json();
+
+  if (!res.state) {
+    document.querySelector('.food').classList.add('d-none');
+    document.querySelector('.summary').classList.add('d-none');
+    document.querySelector('.order-resume').classList.add('d-none');
+    document.querySelector('.nosale').classList.remove('d-none');
+    return;
+  }
+
   products = await fetchProducts();
   sauces = await fetchSauces();
 }
