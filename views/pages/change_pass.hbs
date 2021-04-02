@@ -1,0 +1,42 @@
+{{#> layouts/default}}
+
+{{#*inline "scripts-block"}}
+<script src="/js/change-pass.js" type="module" defer></script>
+{{/inline}}
+
+{{#*inline "content-block"}}
+<div class="chpass container p-4">
+  <div class="row">
+    <div class="col">
+      <h1 class="display-3">Cambiar Contraseña</h1>
+    </div>
+  </div>
+  <div class="row my-4">
+    <div class="col-lg-6 col m-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Cambiar Contraseña para "{{user}}"</h5>
+        </div>
+        <div class="card-body container">
+          <input type="hidden" name="userId" id="userId" value="{{userId}}">
+          <div class="row">
+            <div class="col-6">
+              <label for="prevPass" class="form-label">Contraseña actual:</label>
+              <input type="password" name="prevPass" id="prevPass" class="form-control">
+            </div>
+            <div class="col-6">
+              <label for="newPass" class="form-label">Nueva Contraseña:</label>
+              <input type="password" name="newPass" id="newPass" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="card-footer d-flex">
+          <button class="btn btn-primary ms-auto" id="submitChange" type="submit">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/inline}}
+
+{{/layouts/default}}
