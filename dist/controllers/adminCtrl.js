@@ -49,12 +49,15 @@ var AdminController = (function () {
     AdminController.prototype.renderLogAdminIn = function (req, res, next) {
         return res.render('pages/login', {});
     };
+    AdminController.prototype.renderChangePass = function (req, res, next) {
+        return res.render('pages/change_pass', {});
+    };
     AdminController.prototype.logAdminIn = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
                 passport_1.default.authenticate('admin.signin', {
-                    failureRedirect: '/login',
+                    failureRedirect: '/admin/login',
                     successRedirect: '/admin',
                     failureFlash: true,
                 }, function (err, user, info) { return __awaiter(_this, void 0, void 0, function () {
@@ -64,12 +67,12 @@ var AdminController = (function () {
                                 if (err)
                                     return [2, next(err)];
                                 if (!user)
-                                    return [2, res.redirect('/login')];
+                                    return [2, res.redirect('/admin/login')];
                                 return [4, user.validatePass(req.body.pass)];
                             case 1:
                                 if (!(_a.sent())) {
                                     req.flash('message', 'Contraseña incorrecta');
-                                    return [2, res.redirect('/login')];
+                                    return [2, res.redirect('/admin/login')];
                                 }
                                 req.logIn(user, function (err) {
                                     if (err)

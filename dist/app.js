@@ -64,6 +64,7 @@ app.use(function (req, res, next) {
     var user = req.user;
     res.locals.error_message = req.flash('error_message')[0];
     res.locals.user = user === null || user === void 0 ? void 0 : user.name;
+    res.locals.userId = user === null || user === void 0 ? void 0 : user._id;
     return next();
 });
 app.use('/api', public_api_1.default);

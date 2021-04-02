@@ -12,5 +12,6 @@ router.route('/login')
     .post(adminCtrl_1.default.logAdminIn);
 router.use(helpers_1.isAuthenticated);
 router.get('/', adminCtrl_1.default.index);
+router.get('/user/change-password', adminCtrl_1.default.renderChangePass);
 router.get('/logout', adminCtrl_1.default.logAdminOut);
 exports.default = router;

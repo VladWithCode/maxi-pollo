@@ -16,6 +16,7 @@ router.patch('/sauces/:id', privateApiCtrl_1.default.updateSauceAvailability);
 router.delete('/sauces/:id', privateApiCtrl_1.default.deleteSauce);
 router.patch('/sales', privateApiCtrl_1.default.toggleSaleAvailability);
 router.route('/admin').post(privateApiCtrl_1.default.registerAdmin);
+router.put('/admin/pass-update', privateApiCtrl_1.default.changePass);
 router.route('/state').get(privateApiCtrl_1.default.fetchCurrentState);
 router.use(function (err, req, res, next) {
     if (res.headersSent)

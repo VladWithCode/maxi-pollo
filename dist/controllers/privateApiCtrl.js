@@ -461,6 +461,54 @@ var PrivateAPIController = (function () {
             });
         });
     };
+    PrivateAPIController.prototype.changePass = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, newPass, prevPass, userId, user, passValid, err_11;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = req.body, newPass = _a.newPass, prevPass = _a.prevPass, userId = _a.userId;
+                        return [4, Admin_1.default.findById(userId)];
+                    case 1:
+                        user = _b.sent();
+                        if (!user)
+                            return [2, res.json({
+                                    status: 'NOT_FOUND',
+                                    message: "No se encontro usuario con id: \"" + userId + "\"",
+                                })];
+                        return [4, user.validatePass(prevPass)];
+                    case 2:
+                        passValid = _b.sent();
+                        if (!passValid) {
+                            return [2, res.json({
+                                    status: 'WRONG_PASS',
+                                    message: "La contrase\u00F1a actual no es correcta. Vuelva a intentarlo."
+                                })];
+                        }
+                        user.pass = newPass;
+                        _b.label = 3;
+                    case 3:
+                        _b.trys.push([3, 5, , 6]);
+                        return [4, user.save()];
+                    case 4:
+                        _b.sent();
+                        return [3, 6];
+                    case 5:
+                        err_11 = _b.sent();
+                        console.log(err_11);
+                        return [2, res.json({
+                                status: 'DB_ERROR',
+                                message: "Hubo un error al actualizar la base de datos.\n        " + (err_11.message || ''),
+                                err: err_11,
+                            })];
+                    case 6: return [2, res.json({
+                            status: 'OK',
+                            message: "Contrase\u00F1a actualizada con exito.",
+                        })];
+                }
+            });
+        });
+    };
     return PrivateAPIController;
 }());
 exports.default = new PrivateAPIController();
