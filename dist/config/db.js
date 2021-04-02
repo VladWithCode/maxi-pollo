@@ -11,8 +11,8 @@ mongoose_1.default.connect(DB_URI, {
     useUnifiedTopology: true,
     useFindAndModify: false
 }, function (err) {
-    if (!err)
-        return console.log('Connected to DB');
-    console.log(err);
+    if (err)
+        return console.log(err);
+    console.log('Connected to DB');
 });
 exports.default = mongoose_1.default;
