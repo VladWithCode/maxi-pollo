@@ -71,6 +71,28 @@ class PrivateAPIController {
     });
   }
 
+  public toggleSaleAvailability(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): void | Response {
+    const { currentState } = req.body;
+
+    if (currentState === 'enabled') {
+      req.app.locals.saleState = false;
+      return res.json({
+        status: 'OK',
+        newState: req.app.locals.saleState,
+      });
+    }
+
+    req.app.locals.saleState = true;
+    return res.json({
+      status: 'OK',
+      newState: req.app.locals.saleState,
+    });
+  }
+
   // Meal management
   public async createMeal(
     req: Request,
@@ -171,6 +193,33 @@ class PrivateAPIController {
     });
   }
 
+  public async deleteMeal(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void | Response> {
+    const { id } = req.params;
+    let deletedMeal;
+
+    try {
+      deletedMeal = await MealModel.findByIdAndDelete(id).lean();
+    } catch (err) {
+      return next(err);
+    }
+
+    if (!deletedMeal)
+      return res.json({
+        status: 'NOT_FOUND',
+        message: `No se encontró producto con id: ${id || ''}`,
+      });
+
+    return res.json({
+      status: 'OK',
+      message: `Producto con id "${id}" ha sido eliminado con exito`,
+      meal: deletedMeal,
+    });
+  }
+
   // Sauce management
   public async createSauce(
     req: Request,
@@ -261,6 +310,33 @@ class PrivateAPIController {
     return;
   }
 
+  public async deleteSauce(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void | Response> {
+    const { id } = req.body;
+    let deletedSauce;
+
+    try {
+      deletedSauce = await Sauce.findByIdAndDelete(id).lean();
+    } catch (err) {
+      return next(err);
+    }
+
+    if (!deletedSauce)
+      return res.json({
+        status: 'NOT_FOUND',
+        message: `No se encontro salsa con id: ${id}`,
+      });
+
+    return res.json({
+      status: 'OK',
+      message: `Salsa con id "${id}" ha sido eliminada con exito`,
+      sauce: deletedSauce,
+    });
+  }
+
   // User Management
   public async registerAdmin(
     req: Request,
@@ -296,6 +372,43 @@ class PrivateAPIController {
     return res.json({
       status: 'CREATED',
       message: `Usuario ${user} fue registrado con exito`,
+    });
+  }
+
+  public async changePass(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void | Response> {
+    const { userId, newPass, prevPass } = req.body;
+
+    const user = await Admin.findById(userId);
+
+    if (!user)
+      return res.json({
+        status: 'NOT_FOUND',
+        message: `No se encontró usuario con id: ${userId || ''}`,
+      });
+
+    const passValid = await user.validatePass(prevPass);
+
+    if (!passValid)
+      return res.json({
+        status: 'WRONG_PASS',
+        message: `La contraseña actual no es correcta. Vuelve a intentarlo.`,
+      });
+
+    user.pass = newPass;
+
+    try {
+      await user.save();
+    } catch (err) {
+      return next(err);
+    }
+
+    return res.json({
+      status: 'OK',
+      message: `Contraseña actualizada con exito.`,
     });
   }
 }

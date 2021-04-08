@@ -14,7 +14,7 @@ const MealSchema = new Schema({
   price: { type: Number, required: true },
   category: { type: String, required: true },
   description: { type: String, default: null },
-  thumb: { type: String, required: true },
+  thumb: { type: String },
   available: { type: Boolean, default: true }
 });
 

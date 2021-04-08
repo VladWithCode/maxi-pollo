@@ -46,13 +46,21 @@ class AdminController {
     )(req, res, next);
   }
 
+  public renderChangePass(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): void {
+    return res.render('pages/change_pass', {});
+  }
+
   public logAdminOut(
     req: Request,
     res: Response,
     next: NextFunction
   ): void | Response {
     req.logout();
-    return res.redirect('/admin/login')
+    return res.redirect('/admin/login');
   }
 }
 

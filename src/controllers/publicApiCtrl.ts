@@ -19,6 +19,17 @@ import Sale, { ISale } from '../models/Sale';
 import Sauce, { ISauce } from '../models/Sauce';
 
 class PublicAPIController {
+  public getSaleState(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): void | Response {
+    return res.json({
+      status: 'OK',
+      state: req.app.locals.saleState,
+    });
+  }
+
   public async fetchMeals(
     req: Request,
     res: Response,

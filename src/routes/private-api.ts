@@ -5,21 +5,25 @@ const router = Router();
 
 router.post('/meals', privateApiCtrl.createMeal);
 
-router.put('/meals', privateApiCtrl.updateMeal);
+router.put('/meals/:id', privateApiCtrl.updateMeal);
 
-router.patch('/meals', privateApiCtrl.updateMealAvailability);
+router.patch('/meals/:id', privateApiCtrl.updateMealAvailability);
+
+router.delete('/sauces/:id', privateApiCtrl.deleteMeal);
 
 router.post('/sauces', privateApiCtrl.createSauce);
 
-router.put('/sauces', privateApiCtrl.updateSauce);
+router.put('/sauces/:id', privateApiCtrl.updateSauce);
 
-router.patch('/sauces', privateApiCtrl.updateSauceAvailability);
+router.patch('/sauces/:id', privateApiCtrl.updateSauceAvailability);
 
-router.route('/admin')
-  .post(privateApiCtrl.registerAdmin);
+router.delete('/sauces/:id', privateApiCtrl.deleteSauce);
 
-router.route('/state')
-  .get(privateApiCtrl.fetchCurrentState);
+router.route('/admin').post(privateApiCtrl.registerAdmin);
+
+router.patch('/admin/pass-update', privateApiCtrl.changePass);
+
+router.route('/state').get(privateApiCtrl.fetchCurrentState);
 
 router.use(
   (err: Error, req: Request, res: Response, next: NextFunction): void => {
@@ -30,7 +34,7 @@ router.use(
       res.status(500).json({
         status: 'DB_ERROR',
         message: 'Ocurrio un error con la base de datos',
-        err
+        err,
       });
       return;
     }
@@ -38,7 +42,7 @@ router.use(
     res.status(500).json({
       status: 'SERVER_ERROR',
       message: 'Ocurrio un error interno en el servidor',
-      err
+      err,
     });
     return;
   }
